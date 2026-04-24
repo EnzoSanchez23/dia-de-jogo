@@ -5,6 +5,15 @@ body{
     padding: 0;
 }
 
+.main-container{
+    display: flex;
+}
+
 ul{
-    list-style-type: disc;
+    list-style-type: none;
+}
+
+.left-img, .right-img{
+    width: 8wh;
+    height: 8vh;
 }
