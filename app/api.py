@@ -76,7 +76,6 @@ def main():
 📅 {data_formatada}
 ⌚ {hora_formatada}
 
-📺 Transmissão:
 """.strip()
 
     print(mensagem)
