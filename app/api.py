@@ -6,8 +6,8 @@ import os
 # =========================
 # CONFIG
 # =========================
-load_dotenv()
-API_KEY = os.getenv("api_sportsdb")
+load_dotenv() #Carrega o .env
+API_KEY = os.getenv("api_sportsdb") #Pega a key pelo .env
 TEAM_ID = "134284"  # Corinthians
 
 
@@ -18,14 +18,14 @@ def get_proximo_jogo():
     url = f"https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsnext.php?id={TEAM_ID}"
 
     res = requests.get(url)
-    data = res.json()
+    data = res.json() #Tranforma a resposta em um JSON
 
-    eventos = data.get("events")
+    eventos = data.get("events") #Dentro do JSON, ele pega a CHAVE "events"
 
     if not eventos:
         return None
 
-    jogo = eventos[0]
+    jogo = eventos[0] #Dentro da CHAVE "events", ele pega o indice 0 da lista (dic -> list -> dic)
 
     # prioridade para horário local
     data_str = jogo.get("dateEventLocal") or jogo.get("dateEvent")
