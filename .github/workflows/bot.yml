@@ -24,8 +24,8 @@ jobs:
 
       - name: Run script
         env:
-          pushover_token_key: ${{ secrets.PUSHOVER_TOKEN }}
-          pushover_user_key: ${{ secrets.PUSHOVER_USER }}
-          api_sportsdb: ${{ secrets.API_SPORTSDB }}
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          API_SPORTSDB: ${{ secrets.API_SPORTSDB }}
         run: |
           python app/main.py
