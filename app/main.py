@@ -10,7 +10,7 @@ import os
 # CONFIG
 # =========================
 load_dotenv()
-DEBUG = False
+DEBUG = True
 
 
 # =========================
@@ -49,7 +49,7 @@ def main():
     if DEBUG:
         print(f"Faltam: {diferenca}")
 
-    if timedelta(minutes=55) <= diferenca <= timedelta(minutes=60):
+    #if timedelta(minutes=55) <= diferenca <= timedelta(minutes=60):
         if DEBUG:
             print("🔔 Hora de notificar!")
 
@@ -63,7 +63,7 @@ def main():
 🆚 {jogo["mandante"]} x {jogo["visitante"]}
 🏆 {jogo["campeonato"]}
 📅 {data_formatada}
-⌚ {hora_formatada}
+🕰️ {hora_formatada}
 """.strip()
 
         enviar_push(mensagem)
