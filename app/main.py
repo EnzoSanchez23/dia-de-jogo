@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
 from api import get_proximo_jogo
 from utils import formatar_data_hora
+import requests
+from dotenv import load_dotenv
+import os
 
 
 # =========================
@@ -18,6 +21,20 @@ def ja_notificado(event_id):
     except FileNotFoundError:
         return False
 
+
+#==========================
+# Pushover
+#==========================
+load_dotenv()
+def enviar_push(mensagem):
+    requests.post(
+        "https://api.pushover.net/1/messages.json",
+        data={
+            "token": os.getenv("pushover_token_key"),
+            "user": os.getenv("pushover_user_key"),
+            "message": mensagem,
+        },
+    )
 
 # =========================
 # MAIN
@@ -65,8 +82,8 @@ def main():
 ⌚ {hora_formatada}
 """.strip()
 
-        print(mensagem)
-
+        #print(mensagem)
+        enviar_push(mensagem)
         salvar_notificado(jogo["id"])
 
     else:
