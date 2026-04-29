@@ -20,8 +20,8 @@ def enviar_push(mensagem):
     requests.post(
         "https://api.pushover.net/1/messages.json",
         data={
-            "token": os.getenv("pushover_token_key"),
-            "user": os.getenv("pushover_user_key"),
+            "token": os.getenv("PUSHOVER_TOKEN"),
+            "user": os.getenv("PUSHOVER_USER"),
             "message": mensagem,
         },
     )

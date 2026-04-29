@@ -7,7 +7,7 @@ import os
 # CONFIG
 # =========================
 load_dotenv() #Carrega o .env
-API_KEY = os.getenv("api_sportsdb") #Pega a key pelo .env
+API_KEY = os.getenv("API_SPORTSDB") #Pega a key pelo .env
 TEAM_ID = "134284"  # Corinthians
 
 
