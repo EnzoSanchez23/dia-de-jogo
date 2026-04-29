@@ -9,7 +9,7 @@ import os
 load_dotenv() #Carrega o .env
 API_KEY = os.getenv("API_SPORTSDB") #Pega a key pelo .env
 TEAM_ID = "134284"  # Corinthians
-
+print("API_KEY:", os.getenv("API_SPORTSDB"))
 
 # =========================
 # BUSCAR PRÓXIMO JOGO
