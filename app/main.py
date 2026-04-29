@@ -10,7 +10,7 @@ import os
 # CONFIG
 # =========================
 load_dotenv()
-DEBUG = True
+DEBUG = False
 
 
 # =========================
