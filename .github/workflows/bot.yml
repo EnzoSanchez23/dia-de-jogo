@@ -1,0 +1,31 @@
+name: Corinthians Bot
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"  # roda a cada 10 minutos
+  workflow_dispatch:       # permite rodar manualmente
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install requests python-dotenv
+
+      - name: Run script
+        env:
+          pushover_token_key: ${{ secrets.PUSHOVER_TOKEN }}
+          pushover_user_key: ${{ secrets.PUSHOVER_USER }}
+          api_sportsdb: ${{ secrets.API_SPORTSDB }}
+        run: |
+          python app/main.py
