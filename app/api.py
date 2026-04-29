@@ -32,6 +32,7 @@ def get_proximo_jogo():
     hora_str = jogo.get("strTimeLocal") or jogo.get("strTime")
 
     return {
+        "id": jogo.get("idEvent"),
         "campeonato": jogo.get("strLeague"),
         "mandante": jogo.get("strHomeTeam"),
         "visitante": jogo.get("strAwayTeam"),
