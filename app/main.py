@@ -7,25 +7,10 @@ import os
 
 
 # =========================
-# CONTROLE DE NOTIFICAÇÃO
-# =========================
-def salvar_notificado(event_id):
-    with open("notificado.txt", "w") as f:
-        f.write(event_id)
-
-
-def ja_notificado(event_id):
-    try:
-        with open("notificado.txt", "r") as f:
-            return f.read() == event_id
-    except FileNotFoundError:
-        return False
-
-
-#==========================
 # Pushover
-#==========================
+# =========================
 load_dotenv()
+
 def enviar_push(mensagem):
     requests.post(
         "https://api.pushover.net/1/messages.json",
@@ -35,6 +20,7 @@ def enviar_push(mensagem):
             "message": mensagem,
         },
     )
+
 
 # =========================
 # MAIN
@@ -55,17 +41,10 @@ def main():
     agora = datetime.now()
     diferenca = dt_jogo - agora
 
-    #print(f"Agora: {agora}")
-    #print(f"Jogo: {dt_jogo}")
-    #print(f"Faltam: {diferenca}")
+    print(f"Faltam: {diferenca}")
 
-    # janela de 1 hora (com margem)
-    #if timedelta(minutes=55) <= diferenca <= timedelta(minutes=65):
-    if True:
-
-        if ja_notificado(jogo["id"]):
-            #print("Já notificado anteriormente.")
-            return
+    # janela de notificação (ajustada)
+    if timedelta(minutes=55) <= diferenca <= timedelta(minutes=60):
 
         print("🔔 Hora de notificar!")
 
@@ -82,12 +61,10 @@ def main():
 ⌚ {hora_formatada}
 """.strip()
 
-        #print(mensagem)
         enviar_push(mensagem)
-        salvar_notificado(jogo["id"])
 
     else:
-        print("Ainda não está na janela de notificação.")
+        print("Fora da janela de notificação.")
 
 
 if __name__ == "__main__":
