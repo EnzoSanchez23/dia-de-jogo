@@ -18,6 +18,8 @@ def get_proximo_jogo():
     url = f"https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsnext.php?id={TEAM_ID}"
 
     res = requests.get(url)
+    print("STATUS:", res.status_code)
+    print("RESPOSTA BRUTA:", res.text[:200])
     data = res.json() #Tranforma a resposta em um JSON
 
     eventos = data.get("events") #Dentro do JSON, ele pega a CHAVE "events"
