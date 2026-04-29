@@ -1,3 +1,4 @@
 /app/front/static/images
 .env
 __pycache__/
+*.txt
