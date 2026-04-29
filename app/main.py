@@ -7,10 +7,15 @@ import os
 
 
 # =========================
-# Pushover
+# CONFIG
 # =========================
 load_dotenv()
+DEBUG = False
 
+
+# =========================
+# Pushover
+# =========================
 def enviar_push(mensagem):
     requests.post(
         "https://api.pushover.net/1/messages.json",
@@ -29,10 +34,10 @@ def main():
     jogo = get_proximo_jogo()
 
     if not jogo:
-        print("Nenhum jogo encontrado")
+        if DEBUG:
+            print("Nenhum jogo encontrado")
         return
 
-    # converter data/hora para datetime
     dt_jogo = datetime.strptime(
         f"{jogo['data']} {jogo['hora']}",
         "%Y-%m-%d %H:%M:%S"
@@ -41,12 +46,13 @@ def main():
     agora = datetime.now()
     diferenca = dt_jogo - agora
 
-    print(f"Faltam: {diferenca}")
+    if DEBUG:
+        print(f"Faltam: {diferenca}")
 
-    # janela de notificação (ajustada)
     if timedelta(minutes=55) <= diferenca <= timedelta(minutes=60):
 
-        print("🔔 Hora de notificar!")
+        if DEBUG:
+            print("🔔 Hora de notificar!")
 
         data_formatada, hora_formatada = formatar_data_hora(
             jogo["data"], jogo["hora"]
@@ -62,9 +68,6 @@ def main():
 """.strip()
 
         enviar_push(mensagem)
-
-    else:
-        print("Fora da janela de notificação.")
 
 
 if __name__ == "__main__":
