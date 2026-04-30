@@ -1,31 +1,20 @@
-name: Corinthians Bot
+name: Teste Python
 
 on:
-  schedule:
-    - cron: "*/10 * * * *"  # roda a cada 10 minutos
-  workflow_dispatch:       # permite rodar manualmente
+  workflow_dispatch:
 
 jobs:
-  run-bot:
+  teste:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: |
-          pip install requests python-dotenv
+          python-version: '3.x'
 
       - name: Run script
-        env:
-          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
-          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
-          API_SPORTSDB: ${{ secrets.API_SPORTSDB }}
-        run: |
-          python app/main.py
+        run: python app/main.py
