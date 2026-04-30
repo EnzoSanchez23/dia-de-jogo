@@ -21,4 +21,8 @@ jobs:
           pip install requests python-dotenv
 
       - name: Run script
+        env:
+          API_SPORTSDB: ${{ secrets.API_SPORTSDB }}
+          PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
+          PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
         run: python app/main.py
