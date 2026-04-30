@@ -1,17 +1,15 @@
-'''from datetime import datetime, timedelta
+from datetime import datetime, timedelta
 from api import get_proximo_jogo
 from utils import formatar_data_hora
 import requests
 from dotenv import load_dotenv
 import os
 
-
 # =========================
 # CONFIG
 # =========================
 load_dotenv()
 DEBUG = True
-
 
 # =========================
 # Pushover
@@ -25,16 +23,12 @@ def enviar_push(mensagem):
             "message": mensagem,
         },
     )
-'''
+
 
 # =========================
 # MAIN
 # =========================
 def main():
-    print("Rodando codigo no Github")
-    return
-
-'''def main():
     jogo = get_proximo_jogo()
 
     if not jogo:
@@ -71,7 +65,6 @@ def main():
 """.strip()
 
         enviar_push(mensagem)
-'''
 
 if __name__ == "__main__":
     main()
