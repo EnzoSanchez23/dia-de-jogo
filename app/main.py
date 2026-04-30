@@ -10,7 +10,7 @@ import os
 # CONFIG
 # =========================
 load_dotenv()
-DEBUG = False
+DEBUG = True
 
 
 # =========================
@@ -31,6 +31,10 @@ def enviar_push(mensagem):
 # MAIN
 # =========================
 def main():
+    print("Rodando codigo no Github")
+    return
+
+'''def main():
     jogo = get_proximo_jogo()
 
     if not jogo:
@@ -49,7 +53,7 @@ def main():
     if DEBUG:
         print(f"Faltam: {diferenca}")
 
-    #if timedelta(minutes=55) <= diferenca <= timedelta(minutes=60):
+    if timedelta(minutes=55) <= diferenca <= timedelta(minutes=60):
         if DEBUG:
             print("🔔 Hora de notificar!")
 
@@ -67,7 +71,7 @@ def main():
 """.strip()
 
         enviar_push(mensagem)
-
+'''
 
 if __name__ == "__main__":
     main()
