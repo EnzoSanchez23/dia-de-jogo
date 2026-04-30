@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+'''from datetime import datetime, timedelta
 from api import get_proximo_jogo
 from utils import formatar_data_hora
 import requests
@@ -25,7 +25,7 @@ def enviar_push(mensagem):
             "message": mensagem,
         },
     )
-
+'''
 
 # =========================
 # MAIN
