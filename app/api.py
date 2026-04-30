@@ -9,7 +9,6 @@ import os
 load_dotenv() #Carrega o .env
 API_KEY = os.getenv("API_SPORTSDB") #Pega a key pelo .env
 TEAM_ID = "134284"  # Corinthians
-print("API_KEY:", os.getenv("API_SPORTSDB"))
 
 # =========================
 # BUSCAR PRÓXIMO JOGO
@@ -18,8 +17,6 @@ def get_proximo_jogo():
     url = f"https://www.thesportsdb.com/api/v1/json/{API_KEY}/eventsnext.php?id={TEAM_ID}"
 
     res = requests.get(url)
-    print("STATUS:", res.status_code)
-    print("RESPOSTA BRUTA:", res.text[:200])
     data = res.json() #Tranforma a resposta em um JSON
 
     eventos = data.get("events") #Dentro do JSON, ele pega a CHAVE "events"
