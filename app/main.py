@@ -14,6 +14,11 @@ DEBUG = True
 #Timezone do Brsil
 BRAZIL_TZ = timezone(timedelta(hours=-3))
 
+TEAM_NAME = os.getenv("TEAM_NAME")
+
+if not TEAM_NAME:
+    raise ValueError("TEAM_NAME não definido no .env")
+
 # =========================
 # Pushover
 # =========================
@@ -51,16 +56,22 @@ def main():
     if DEBUG:
         print(f"Faltam: {diferenca}")
 
-    if timedelta(minutes=0) <= diferenca <= timedelta(hours=2):
+    #if timedelta(minutes=0) <= diferenca <= timedelta(hours=2):
         if DEBUG:
             print("🔔 Hora de notificar!")
+
+        # Identificar seu time corretamente
+        if TEAM_NAME.lower() in jogo["mandante"].lower():
+            meu_time = jogo["mandante"]
+        else:
+            meu_time = jogo["visitante"]
 
         data_formatada, hora_formatada = formatar_data_hora(
             jogo["data"], jogo["hora"]
         )
 
         mensagem = f"""
-⚽ Dia de {jogo["mandante"]}!
+⚽ Dia de {meu_time}!
 
 🆚 {jogo["mandante"]} x {jogo["visitante"]}
 🏆 {jogo["campeonato"]}
