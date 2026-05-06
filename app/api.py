@@ -8,7 +8,10 @@ import os
 # =========================
 load_dotenv() #Carrega o .env
 API_KEY = os.getenv("API_SPORTSDB") #Pega a key pelo .env
-TEAM_ID = "134284"  # Corinthians
+TEAM_ID = os.getenv("TEAM_ID")
+
+if not TEAM_ID:
+    raise ValueError("TEAM_ID não definido no .env")
 
 # =========================
 # BUSCAR PRÓXIMO JOGO
