@@ -28,4 +28,5 @@ jobs:
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
           TEAM_ID: ${{ secrets.TEAM_ID }}
+          TEAM_NAME: ${{ secrets.TEAM_NAME }}
         run: python app/main.py
