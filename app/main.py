@@ -56,7 +56,7 @@ def main():
     if DEBUG:
         print(f"Faltam: {diferenca}")
 
-    #if timedelta(minutes=0) <= diferenca <= timedelta(hours=2):
+    if timedelta(minutes=0) <= diferenca <= timedelta(hours=2):
         if DEBUG:
             print("🔔 Hora de notificar!")
 
