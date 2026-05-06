@@ -60,7 +60,7 @@ def main():
         )
 
         mensagem = f"""
-⚽ Dia de Corinthians!
+⚽ Dia de {jogo["mandante"]}!
 
 🆚 {jogo["mandante"]} x {jogo["visitante"]}
 🏆 {jogo["campeonato"]}
