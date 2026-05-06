@@ -27,4 +27,5 @@ jobs:
           API_SPORTSDB: ${{ secrets.API_SPORTSDB }}
           PUSHOVER_TOKEN: ${{ secrets.PUSHOVER_TOKEN }}
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
+          TEAM_ID: ${{ secrets.TEAM_ID }}
         run: python app/main.py
