@@ -28,9 +28,13 @@ def get_proximo_jogo():
 
     jogo = eventos[0] #Dentro da CHAVE "events", ele pega o indice 0 da lista (dic -> list -> dic)
 
-    # prioridade para horário local
-    data_str = jogo.get("dateEventLocal") or jogo.get("dateEvent")
-    hora_str = jogo.get("strTimeLocal") or jogo.get("strTime")
+    # Agora usamos o horário UTC da API
+    data_str = jogo.get("dateEvent")
+    hora_str = jogo.get("strTime")
+
+    # Validação para garantir que veio horário
+    if not data_str or not hora_str:
+        return None
 
     return {
         "id": jogo.get("idEvent"),
