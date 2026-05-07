@@ -1,9 +1,10 @@
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
 from api import get_proximo_jogo
-from utils import formatar_data_hora
 import requests
 from dotenv import load_dotenv
 import os
+
 
 # =========================
 # CONFIG
@@ -11,19 +12,21 @@ import os
 load_dotenv()
 DEBUG = True
 
-#Timezone do Brsil
-BRAZIL_TZ = timezone(timedelta(hours=-3))
 
+# Timezones reais
+UTC_TZ = ZoneInfo("UTC")
+BRAZIL_TZ = ZoneInfo("America/Sao_Paulo")
 TEAM_NAME = os.getenv("TEAM_NAME")
 
 if not TEAM_NAME:
     raise ValueError("TEAM_NAME não definido no .env")
 
+
 # =========================
-# Pushover
+# PUSHOVER
 # =========================
 def enviar_push(mensagem):
-    requests.post(
+    res = requests.post(
         "https://api.pushover.net/1/messages.json",
         data={
             "token": os.getenv("PUSHOVER_TOKEN"),
@@ -31,6 +34,9 @@ def enviar_push(mensagem):
             "message": mensagem,
         },
     )
+
+    if DEBUG:
+        print(f"Push status: {res.status_code}")
 
 
 # =========================
@@ -44,31 +50,48 @@ def main():
             print("Nenhum jogo encontrado")
         return
 
-    #Fuso do Brasil
+
+    # Horário da API agora é tratado como UTC
     dt_jogo = datetime.strptime(
         f"{jogo['data']} {jogo['hora']}",
         "%Y-%m-%d %H:%M:%S"
-    ).replace(tzinfo=BRAZIL_TZ)
+    )
+
+
+    # Define horário UTC
+    dt_jogo = dt_jogo.replace(tzinfo=UTC_TZ)
+
+
+    # Converte UTC → Brasil
+    dt_jogo = dt_jogo.astimezone(BRAZIL_TZ)
 
     agora = datetime.now(BRAZIL_TZ)
+
     diferenca = dt_jogo - agora
 
     if DEBUG:
+        print(f"Agora Brasil: {agora}")
+        print(f"Jogo Brasil: {dt_jogo}")
         print(f"Faltam: {diferenca}")
 
+
+    # Janela de notificação
     if timedelta(minutes=0) <= diferenca <= timedelta(hours=2):
+
         if DEBUG:
             print("🔔 Hora de notificar!")
 
-        # Identificar seu time corretamente
+
+        # Identifica corretamente seu time
         if TEAM_NAME.lower() in jogo["mandante"].lower():
             meu_time = jogo["mandante"]
         else:
             meu_time = jogo["visitante"]
 
-        data_formatada, hora_formatada = formatar_data_hora(
-            jogo["data"], jogo["hora"]
-        )
+
+        # Formata usando horário convertido
+        data_formatada = dt_jogo.strftime("%d/%m/%Y")
+        hora_formatada = dt_jogo.strftime("%H:%M")
 
         mensagem = f"""
 ⚽ Dia de {meu_time}!
@@ -80,6 +103,11 @@ def main():
 """.strip()
 
         enviar_push(mensagem)
+
+    else:
+        if DEBUG:
+            print("Fora da janela de notificação")
+
 
 if __name__ == "__main__":
     main()
