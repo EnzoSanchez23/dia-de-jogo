@@ -7,8 +7,10 @@ Script em Python que monitora o próximo jogo de um time e envia uma notificaç�
 ## 🚀 O que faz
 
 * Busca o próximo jogo via API
+* Converte automaticamente horários para o fuso de Brasília
 * Calcula o tempo até a partida
-* Envia notificação automática
+* Envia notificações automáticas para o celular
+* Pode ser executado localmente ou via GitHub Actions
 
 ---
 
@@ -18,13 +20,14 @@ Script em Python que monitora o próximo jogo de um time e envia uma notificaç�
 * requests
 * python-dotenv
 * GitHub Actions
+* TheSportsDB API
 * Pushover
 
 ---
 
 ## 📂 Estrutura
 
-```
+```text
 app/
  ├── main.py
  ├── api.py
@@ -37,9 +40,9 @@ app/
 
 ### 1. Clonar o projeto
 
-```
-git clone <seu-repo>
-cd <seu-repo>
+```bash
+git clone https://github.com/EnzoSanchez23/dia-de-jogo.git
+cd dia-de-jogo
 ```
 
 ---
@@ -48,24 +51,49 @@ cd <seu-repo>
 
 Use o arquivo de exemplo:
 
-```
+```bash
 cp .env.example .env
 ```
 
 Depois edite o `.env` com suas credenciais:
 
-```
+```env
 API_SPORTSDB=sua_api_key
 PUSHOVER_TOKEN=seu_token
 PUSHOVER_USER=seu_user
 TEAM_ID=id_do_time
+TEAM_NAME=nome_do_time
 ```
 
 ---
 
-### 3. Instalar dependências
+### 3. Como descobrir o TEAM_ID
 
+A API utilizada é a TheSportsDB.
+
+Faça uma busca pelo nome do time:
+
+```text
+https://www.thesportsdb.com/api/v1/json/SUA_API_KEY/searchteams.php?t=Corinthians
 ```
+
+Na resposta JSON procure por:
+
+```json
+"idTeam": "134284"
+```
+
+Utilize esse valor no `.env`:
+
+```env
+TEAM_ID=134284
+```
+
+---
+
+### 4. Instalar dependências
+
+```bash
 pip install requests python-dotenv
 ```
 
@@ -73,29 +101,78 @@ pip install requests python-dotenv
 
 ## ▶️ Rodar localmente
 
-```
+```bash
 python app/main.py
 ```
 
 ---
 
-## 🔄 Automação
+## 🔄 Automação com GitHub Actions
 
-O projeto roda automaticamente usando GitHub Actions.
+O projeto pode ser executado automaticamente através do GitHub Actions.
 
-⚠️ Observação: o agendamento pode sofrer atrasos (limitação da plataforma).
+Para isso, adicione os seguintes Secrets no repositório:
+
+```text
+API_SPORTSDB
+TEAM_ID
+TEAM_NAME
+PUSHOVER_TOKEN
+PUSHOVER_USER
+```
+
+Caminho:
+
+```text
+Settings
+→ Secrets and variables
+→ Actions
+→ New repository secret
+```
+
+Após configurados, o workflow executará automaticamente conforme o cron definido no arquivo:
+
+```text
+.github/workflows/notificador.yml
+```
+
+Também é possível executar manualmente pela aba:
+
+```text
+Actions
+→ Run workflow
+```
+
+⚠️ Observação: o GitHub Actions gratuito pode apresentar atrasos na execução dos workflows agendados.
+
+---
+
+## 📱 Pushover
+
+As notificações são enviadas utilizando o Pushover.
+
+Site oficial:
+
+https://pushover.net
+
+Para utilizar o serviço é necessário criar uma conta e gerar:
+
+* PUSHOVER_TOKEN
+* PUSHOVER_USER
+
+⚠️ O Pushover oferece aproximadamente 30 dias de teste gratuito. Após esse período é necessário adquirir uma licença para continuar recebendo notificações.
 
 ---
 
 ## 📱 Exemplo de notificação
 
-```
-⚽ Dia de Jogo!
+```text
+⚽ Dia de Corinthians!
 
-🆚 Time A x Time B
-🏆 Campeonato
-📅 xx/xx/2026
-🕰️ 20:30
+🆚 Corinthians x Santos
+🏆 Campeonato Brasileiro
+📅 18/05/2026
+🕰️ 16:00
 ```
 
 ---
@@ -103,6 +180,7 @@ O projeto roda automaticamente usando GitHub Actions.
 ## 📌 Observações
 
 * O `TEAM_ID` define qual time será monitorado
+* O `TEAM_NAME` é utilizado para personalizar as mensagens
 * Pode ser alterado no `.env` ou nos Secrets do GitHub
 * Projeto simples focado em estudo e portfólio
 
