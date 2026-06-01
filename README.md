@@ -7,7 +7,7 @@ Script em Python que monitora o próximo jogo de um time e envia uma notificaç�
 ## 🚀 O que faz
 
 * Busca o próximo jogo via API
-* Converte automaticamente horários para o fuso de Brasília
+* Converte automaticamente horários para o fuso de Brasília (quando necessário)
 * Calcula o tempo até a partida
 * Envia notificações automáticas para o celular
 * Pode ser executado localmente ou via GitHub Actions
@@ -70,6 +70,36 @@ TEAM_NAME=nome_do_time
 ### 3. Como descobrir o TEAM_ID
 
 A API utilizada é a TheSportsDB.
+
+Existem duas formas de encontrar o ID do time.
+
+#### Opção 1 - Pelo site da TheSportsDB (mais simples)
+
+Acesse:
+
+```text
+https://www.thesportsdb.com/
+```
+
+Pesquise pelo nome do time e abra sua página.
+
+Na URL será exibido o ID da equipe.
+
+Exemplo:
+
+```text
+https://www.thesportsdb.com/team/134284-Corinthians
+```
+
+Nesse caso:
+
+```env
+TEAM_ID=134284
+```
+
+---
+
+#### Opção 2 - Pela API
 
 Faça uma busca pelo nome do time:
 
