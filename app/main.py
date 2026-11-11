@@ -1,4 +1,3 @@
-from string import templatelib
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 from api import get_proximo_jogo
