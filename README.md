@@ -58,8 +58,6 @@ cd dia-de-jogo
 pip install -r requirements.txt
 ```
 
-*(Caso não tenha o `requirements.txt`, instale via: `pip install pyTelegramBotAPI requests python-dotenv`)*
-
 ---
 
 ### 3. Configurar variáveis de ambiente (`.env`)
