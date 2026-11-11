@@ -1,26 +1,28 @@
-name: Corinthians Python
+name: Notificacao Jogo Corinthians
 
 on:
   schedule:
-    - cron: "*/8 * * * *" #Roda a cada 8 minutos
+    # Roda a cada 30 minutos em UTC
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 jobs:
-  teste:
+  verificar_jogo:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.x"
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
-          pip install requests python-dotenv
+          pip install --upgrade pip
+          pip install requests python-dotenv pyTelegramBotAPI
 
       - name: Run script
         env:
@@ -29,4 +31,6 @@ jobs:
           PUSHOVER_USER: ${{ secrets.PUSHOVER_USER }}
           TEAM_ID: ${{ secrets.TEAM_ID }}
           TEAM_NAME: ${{ secrets.TEAM_NAME }}
+          TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
+          TELEGRAM_USER_ID: ${{ secrets.TELEGRAM_USER_ID }}
         run: python app/main.py
