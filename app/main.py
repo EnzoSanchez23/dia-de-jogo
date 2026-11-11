@@ -94,8 +94,7 @@ def main():
 
     
     # Janela de notificação
-    #if timedelta(minutes=0) <= diferenca <= timedelta(hours=2):
-    if DEBUG:
+    if timedelta(hours=1, minutes=30) <= diferenca <= timedelta(hours=2):
 
         if DEBUG:
             print("🔔 Hora de notificar!")
